@@ -1,18 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class DeathManager : Singleton<DeathManager> {
+public class DeathManager {
     private static DeathManager instance;
-
-    private Mortal player = null;
-    private Dispatcher<MonoBehaviour>.EventHandler deathHandler = MonoBehaviour => {
-        Application.Quit();
-    };
-
-    public DeathManager Instance()
+    public static DeathManager Instance()
     {
         return instance != null ? instance : instance = new DeathManager();
     }
+
+    private Dispatcher<MonoBehaviour>.EventHandler deathHandler = eventData =>
+    {
+        Debug.Log("Player was killed by " + eventData);
+        Application.Quit();
+        return true;
+    };
+    private Mortal player = null;
 
     public Mortal Player
     {

@@ -5,9 +5,14 @@ using System.Collections;
 /// The Player's logic - input
 /// </summary>
 
-[RequireComponent(typeof(Moving), typeof(Jumping))]
+[RequireComponent(typeof(Female))]
+[RequireComponent(typeof(Jumping))]
+[RequireComponent(typeof(Mortal))]
+[RequireComponent(typeof(Moving))]
 public class PlayerController : Controller
 {
+    private float age;
+
 	// editor variables:
 
 	/// <summary>
@@ -32,28 +37,37 @@ public class PlayerController : Controller
 		get { return moving.Grounded; }
 	}
 
+    public PlayerController()
+    {
+        NormalizedAge = age = 0;
+    }
+
 	// component refs:
 
 	private Moving moving;
 	private Jumping jumping;
     private Female female;
+    private Mortal mortal;
 
 	void Awake()
 	{
 		moving = GetComponent<Moving>();
 		jumping = GetComponent<Jumping>();
         female = GetComponent<Female>();
+        mortal = GetComponent<Mortal>();
 	}
 
 	// Use this for initialization
 	void Start()
 	{
+        DeathManager.Instance().Player = mortal;
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
-		NormalizedAge += Time.deltaTime / maxAge;
+        age += Time.deltaTime;
+		NormalizedAge = age / maxAge;
 		NormalizedAge = Mathf.Min(1, NormalizedAge);
 	}
 
@@ -78,9 +92,10 @@ public class PlayerController : Controller
 
     public override void Die(bool die)
     {
-        if (die && female != null)
+        if (die)
         {
             female.SwitchToChild();
+            mortal.Kill(this);
         }
     }
 }

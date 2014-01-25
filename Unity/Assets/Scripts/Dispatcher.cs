@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 public class Dispatcher<EventDataType> {
-    public delegate void EventHandler(EventDataType eventData);
+    public delegate bool EventHandler(EventDataType eventData);
 
     private HashSet<EventHandler> handlers = new HashSet<EventHandler>();
 
@@ -18,9 +18,17 @@ public class Dispatcher<EventDataType> {
 
     public void Dispatch(EventDataType eventData)
     {
+        HashSet<EventHandler> toBeRemoved = new HashSet<EventHandler>();
         foreach (EventHandler handler in handlers)
         {
-            handler(eventData);
+            if (handler(eventData))
+            {
+                toBeRemoved.Add(handler);
+            }
+        }
+        foreach (EventHandler handler in toBeRemoved)
+        {
+            handlers.Remove(handler);
         }
     }
 }

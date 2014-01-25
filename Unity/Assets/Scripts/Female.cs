@@ -20,7 +20,6 @@ public class Female : MonoBehaviour
         {
             Debug.Log("Female: Switching to child");
             Instantiate(PlayerPrefab, Child.position, Child.rotation);
-            Destroy(gameObject);
         }
     }
 
