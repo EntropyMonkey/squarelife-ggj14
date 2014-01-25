@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerInput : MonoBehaviour {
-    private const string DIE = "Die";
-    const string HORIZONTAL = "Horizontal";
-    const string VERTICAL = "Vertical";
+public class PlayerInput : MonoBehaviour
+{
+    private const string HORIZONTAL = "Horizontal";
+    private const string JUMP = "Jump";
+    private const string SWITCH = "Switch";
 
 	PlayerController playerController;
 
@@ -16,8 +17,8 @@ public class PlayerInput : MonoBehaviour {
     void FixedUpdate()
     {
 		playerController.MoveHorizontal(Input.GetAxis(HORIZONTAL));
-        playerController.Jump(Input.GetAxis(VERTICAL) > 0);
-		playerController.Die(Input.GetButton(DIE));
+        playerController.Jump(Input.GetButtonDown(JUMP));
+		playerController.Die(Input.GetButtonDown(SWITCH));
     }
 
 }

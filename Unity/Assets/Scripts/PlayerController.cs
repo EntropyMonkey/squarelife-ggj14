@@ -11,15 +11,8 @@ using System.Collections;
 [RequireComponent(typeof(Moving))]
 public class PlayerController : Controller
 {
-    private float age;
-
-	// editor variables:
-
-	/// <summary>
-	/// Max age in seconds
-	/// </summary>
-	[SerializeField]
-	private float maxAge;
+    public float Age = 0;
+	public float Lifetime = 30;
 
 	// publics:
 
@@ -36,11 +29,6 @@ public class PlayerController : Controller
 	{
 		get { return moving.Grounded; }
 	}
-
-    public PlayerController()
-    {
-        NormalizedAge = age = 0;
-    }
 
 	// component refs:
 
@@ -60,15 +48,15 @@ public class PlayerController : Controller
 	// Use this for initialization
 	void Start()
 	{
+        Debug.Log("PlayerController: Switching DeathManager.Player to " + mortal);
         DeathManager.Instance().Player = mortal;
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
-        age += Time.deltaTime;
-		NormalizedAge = age / maxAge;
-		NormalizedAge = Mathf.Min(1, NormalizedAge);
+        Age = Mathf.Min(Age + Time.deltaTime, Lifetime);
+		NormalizedAge = Age / Lifetime;
 	}
 
 	public override void MoveHorizontal(float axisValue)
@@ -94,8 +82,11 @@ public class PlayerController : Controller
     {
         if (die)
         {
-            female.SwitchToChild();
-            mortal.Kill(this);
+            if (female.SwitchToChild())
+            {
+                Debug.Log("Switched to child, kill parent");
+                mortal.Kill(this);
+            }
         }
     }
 }
