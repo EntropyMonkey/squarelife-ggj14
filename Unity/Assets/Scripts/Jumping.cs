@@ -5,7 +5,13 @@ using System.Collections;
 class Jumping : MonoBehaviour
 {
 	[SerializeField]
-    private float Speed = 8;
+    private float MinSpeed = 8;
+
+	[SerializeField]
+	private float MaxSpeed = 10;
+
+	[SerializeField]
+	private float Gravity = 20;
 
     private bool jumping = false;
 
@@ -20,11 +26,12 @@ class Jumping : MonoBehaviour
     {
         if (jumping && controller.Grounded)
         {
-            rigidbody.velocity += new Vector3(
-                0,
-                (controller.Scale) * Speed,
-                0);
+            rigidbody.velocity += Vector3.up * Mathf.Lerp(MinSpeed, MaxSpeed, controller.NormalizedAge);
         }
+		else
+		{
+			rigidbody.velocity += Vector3.down * Gravity * Time.deltaTime;
+		}
     }
 	public void SetJumping(bool jumping)
 	{
