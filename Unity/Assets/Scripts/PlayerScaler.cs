@@ -35,7 +35,7 @@ public class PlayerScaler : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		ScaleMe(maxScale * playerController.NormalizedAge);
+		ScaleMe(1 + maxScale * playerController.NormalizedAge);
 	}
 
 	void ScaleMe (float newScale)
