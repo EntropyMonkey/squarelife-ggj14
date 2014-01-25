@@ -48,13 +48,13 @@ public class PlayerController : Controller
 	// Use this for initialization
 	void Start()
 	{
-
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
 		NormalizedAge += Time.deltaTime / maxAge;
+		NormalizedAge = Mathf.Min(1, NormalizedAge);
 	}
 
 	public override void MoveHorizontal(float axisValue)
