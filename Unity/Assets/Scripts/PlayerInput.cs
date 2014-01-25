@@ -2,8 +2,9 @@
 using System.Collections;
 
 public class PlayerInput : MonoBehaviour {
-    private const string JUMP = "Jump";
-	const string HORIZONTAL = "Horizontal";
+    private const string DIE = "Die";
+    const string HORIZONTAL = "Horizontal";
+    const string VERTICAL = "Vertical";
 
 	PlayerController playerController;
 
@@ -15,7 +16,8 @@ public class PlayerInput : MonoBehaviour {
     void FixedUpdate()
     {
 		playerController.MoveHorizontal(Input.GetAxis(HORIZONTAL));
-		playerController.Jump(Input.GetButton(JUMP));
+        playerController.Jump(Input.GetAxis(VERTICAL) > 0);
+		playerController.Die(Input.GetButton(DIE));
     }
 
 }

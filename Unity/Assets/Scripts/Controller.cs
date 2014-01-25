@@ -12,4 +12,6 @@ public abstract class Controller : MonoBehaviour
 	public abstract void MoveHorizontal(float axisValue);
 
 	public abstract void Jump(bool jump);
+
+    public abstract void Die(bool die);
 }

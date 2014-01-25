@@ -42,7 +42,7 @@ public class Walking : Moving
             rigidbody.velocity += new Vector3(
                 0,
                 0,
-                Time.deltaTime * controller.Scale * (grounded ? GroundAcceleration : AirAcceleration) * Mathf.Sign(direction));
+                Time.deltaTime * controller.Scale * Mathf.Sign(direction) * (grounded ? GroundAcceleration : AirAcceleration));
         }
         else if (grounded)
         {
@@ -55,10 +55,10 @@ public class Walking : Moving
             }
             else
             {
-                rigidbody.velocity = new Vector3(
-                    rigidbody.velocity.x,
-                    rigidbody.velocity.y,
-                    0);
+                rigidbody.velocity -= new Vector3(
+                    0,
+                    0,
+                    rigidbody.velocity.z);
             }
         }
 		if (Mathf.Abs(rigidbody.velocity.z) > controller.Scale * MaxSpeed)
@@ -72,10 +72,10 @@ public class Walking : Moving
             }
             else
             {
-                rigidbody.velocity = new Vector3(
-                    rigidbody.velocity.x,
-                    rigidbody.velocity.y,
-					Mathf.Sign(rigidbody.velocity.z) * controller.Scale * MaxSpeed);
+                rigidbody.velocity += new Vector3(
+                    0,
+                    0,
+					Mathf.Sign(rigidbody.velocity.z) * controller.Scale * MaxSpeed - rigidbody.velocity.z);
             }
         }
     }
