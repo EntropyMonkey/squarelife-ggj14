@@ -6,17 +6,20 @@ public class PlayerScaler : MonoBehaviour
 {
 	// inspector variables:
 	[SerializeField]
-	private float maxScale = 20;
+	private Vector2 maxScale = new Vector2(3, 5);
+
+	[SerializeField]
+	private Vector2 minScale = new Vector2(1, 1);
 
 	// public variables:
 	/// <summary>
 	/// The player's current scale
 	/// </summary>
-	public float Scale
-	{
-		get;
-		private set;
-	}
+	//public float Scale
+	//{
+	//	get;
+	//	private set;
+	//}
 
 	// component refs:
 	private PlayerController playerController;
@@ -29,22 +32,25 @@ public class PlayerScaler : MonoBehaviour
 	// Use this for initialization
 	void Start()
 	{
-		Scale = 1;
+		transform.localScale = minScale;
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
-		ScaleMe(1 + maxScale * playerController.NormalizedAge);
+		ScaleMe(minScale + (maxScale - minScale) * playerController.NormalizedAge);
 	}
 
-	void ScaleMe (float newScale)
+	void ScaleMe (Vector2 newScale)
 	{
-		newScale = Mathf.Min(newScale, maxScale);
-		newScale = Mathf.Max(newScale, 1);
+		newScale.x = Mathf.Min(newScale.x, maxScale.x);
+		newScale.x = Mathf.Max(newScale.x, minScale.x);
 
-		Scale = newScale;
+		newScale.y = Mathf.Min(newScale.y, maxScale.y);
+		newScale.y = Mathf.Max(newScale.y, minScale.y);
 
-		transform.localScale = Vector3.one * Scale;
+		//Scale = newScale;
+
+		transform.localScale = new Vector3(1, newScale.y, newScale.x);
 	}
 }

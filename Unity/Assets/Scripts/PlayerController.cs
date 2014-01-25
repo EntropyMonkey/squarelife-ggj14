@@ -32,11 +32,6 @@ public class PlayerController : Controller
 		get { return moving.Grounded; }
 	}
 
-	public override float Scale
-	{
-		get { return scaler.Scale; }
-	}
-
 	// component refs:
 
 	private Moving moving;

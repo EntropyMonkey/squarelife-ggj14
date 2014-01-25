@@ -84,18 +84,22 @@ public class Walking : Moving
 	{
 		if (collision.transform.position.y - transform.position.y < 0)
 		{
+			if (!Grounded)
+				groundedColliderCounter++;
+
 			Grounded = true;
-			groundedColliderCounter++;
+			Debug.Log("Grounded");
 		}
 	}
 
 	void OnCollisionExit(Collision collision)
 	{
-		if (collision.transform.position.y - transform.position.y < 0)
+		if (Grounded && collision.transform.position.y - transform.position.y < 0)
 		{
 			groundedColliderCounter--;
 			if (groundedColliderCounter == 0)
 			{
+				Debug.Log("Airborne");
 				Grounded = false;
 			}
 		}
