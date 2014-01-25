@@ -17,7 +17,6 @@ public class PlayerInput : MonoBehaviour {
     {
 		playerController.MoveHorizontal(Input.GetAxis(HORIZONTAL));
         playerController.Jump(Input.GetAxis(VERTICAL) > 0);
-		Debug.Log(Input.GetAxis(VERTICAL));
 		playerController.Die(Input.GetButton(DIE));
     }
 

@@ -11,14 +11,14 @@ public class PlayerGroundedHack : MonoBehaviour
 		player = transform.parent.GetComponent(typeof(PlayerController)) as PlayerController;
 	}
 
-	void OnTriggerEnter(Collider other)
+	void OnTriggerStay(Collider other)
 	{
-		player.LandedOn(other);
+		if (other.name != "Player")
+			player.StandingOnCollider(other);
 	}
 
 	void OnTriggerExit(Collider other)
 	{
 		player.JumpedOff(other);
 	}
-
 }
