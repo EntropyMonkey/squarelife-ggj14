@@ -9,6 +9,7 @@ namespace Assets.Scripts
 
         private bool jumping = false;
         private Moving moving;
+        private PlayerScaler scaler;
 
         public void SetJumping(bool jumping)
         {
@@ -18,6 +19,7 @@ namespace Assets.Scripts
         void Awake()
         {
             moving = GetComponent<Moving>();
+            scaler = GetComponent<PlayerScaler>();
         }
 
         void FixedUpdate()
@@ -26,7 +28,7 @@ namespace Assets.Scripts
             {
                 rigidbody.velocity += new Vector3(
                     0,
-                    Speed,
+                    (scaler != null ? scaler.Scale : 1) * Speed,
                     0);
             }
         }
