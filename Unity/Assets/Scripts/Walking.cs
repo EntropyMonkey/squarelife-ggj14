@@ -13,7 +13,7 @@ public class Walking : Moving
 	public override bool Grounded
 	{
 		get;
-		protected set;
+		set;
 	}
 
 	// component refs:
@@ -21,7 +21,6 @@ public class Walking : Moving
 
 	// private vars:
     private float direction = 0;
-	private int groundedColliderCounter = 0; // counts all ground colliders in contact
 
     public override void SetDirection(float direction)
     {
@@ -80,23 +79,23 @@ public class Walking : Moving
         }
     }
 
-	void OnCollisionEnter(Collision collision)
-	{
-		if (collision.transform.position.y - transform.position.y < 0)
-		{
-			Grounded = true;
-			groundedColliderCounter++;
-		}
-	}
+	//void OnCollisionEnter(Collision collision)
+	//{
+	//	Vector3 diff = collision.transform.position - transform.position;
+	//	if (diff.y + collision.collider.bounds.extents.y - collider.bounds.extents.y < 0)
+	//	{
+	//		Debug.Log("Ground");
+	//		Grounded = true;
+	//	}
+	//}
 
-	void OnCollisionExit(Collision collision)
-	{
-		if (collision.transform.position.y - transform.position.y < 0)
-		{
-			if (--groundedColliderCounter == 0)
-			{
-				Grounded = false;
-			}
-		}
-	}
+	//void OnCollisionExit(Collision collision)
+	//{
+	//	Vector3 diff = collision.transform.position - transform.position;
+	//	if (diff.y < 0)
+	//	{
+	//		Debug.Log("Airborne");
+	//		Grounded = false;
+	//	}
+	//}
 }

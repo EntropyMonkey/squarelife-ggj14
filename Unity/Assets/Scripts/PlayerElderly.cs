@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent(typeof(Female))]
+[RequireComponent(typeof(Mortal))]
 [RequireComponent(typeof(PlayerController))]
 public class PlayerElderly : MonoBehaviour
 {
@@ -9,11 +11,15 @@ public class PlayerElderly : MonoBehaviour
     [SerializeField]
     private float highNormalizedAge = 1;
 
+    private Female female;
+    private Mortal mortal;
     private PlayerController playerController;
 
     void Awake()
     {
-        playerController = GetComponent(typeof(PlayerController)) as PlayerController;
+        female = GetComponent<Female>();
+        mortal = GetComponent<Mortal>();
+        playerController = GetComponent<PlayerController>();
     }
 
     void OnGUI()
@@ -28,19 +34,11 @@ public class PlayerElderly : MonoBehaviour
     {
         if (playerController.NormalizedAge >= 1)
         {
-            Female female = GetComponent<Female>();
-            if (female != null && female.Child != null)
+            if (female.Child != null)
             {
                 female.SwitchToChild();
             }
-            else
-            {
-                Mortal mortal = GetComponent<Mortal>();
-                if (mortal != null)
-                {
-                    mortal.Kill(this);
-                }
-            }
+            mortal.Kill(this);
         }
     }
 }

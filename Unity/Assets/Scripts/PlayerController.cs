@@ -5,9 +5,14 @@ using System.Collections;
 /// The Player's logic - input
 /// </summary>
 
-[RequireComponent(typeof(Moving), typeof(Jumping), typeof(PlayerScaler))]
+[RequireComponent(typeof(Female))]
+[RequireComponent(typeof(Jumping))]
+[RequireComponent(typeof(Mortal))]
+[RequireComponent(typeof(Moving))]
 public class PlayerController : Controller
 {
+    private float age;
+
 	// editor variables:
 
 	/// <summary>
@@ -32,36 +37,37 @@ public class PlayerController : Controller
 		get { return moving.Grounded; }
 	}
 
-	public override float Scale
-	{
-		get { return scaler.Scale; }
-	}
+    public PlayerController()
+    {
+        NormalizedAge = age = 0;
+    }
 
 	// component refs:
 
 	private Moving moving;
 	private Jumping jumping;
-	private PlayerScaler scaler;
     private Female female;
+    private Mortal mortal;
 
 	void Awake()
 	{
-		scaler = GetComponent<PlayerScaler>();
 		moving = GetComponent<Moving>();
 		jumping = GetComponent<Jumping>();
         female = GetComponent<Female>();
+        mortal = GetComponent<Mortal>();
 	}
 
 	// Use this for initialization
 	void Start()
 	{
-
+        DeathManager.Instance().Player = mortal;
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
-		NormalizedAge += Time.deltaTime / maxAge;
+        age += Time.deltaTime;
+		NormalizedAge = age / maxAge;
 	}
 
 	public override void MoveHorizontal(float axisValue)
@@ -73,12 +79,22 @@ public class PlayerController : Controller
 	{
 		jumping.SetJumping(jump);
 	}
+	public void LandedOn(Collider other)
+	{
+		moving.Grounded = true;
+	}
+
+	public void JumpedOff(Collider other)
+	{
+		moving.Grounded = false;
+	}
 
     public override void Die(bool die)
     {
-        if (die && female != null)
+        if (die)
         {
             female.SwitchToChild();
+            mortal.Kill(this);
         }
     }
 }
