@@ -30,11 +30,6 @@ public class PlayerController : Controller
 		get { return moving.Grounded; }
 	}
 
-    public PlayerController()
-    {
-        NormalizedAge = Age = 0;
-    }
-
 	// component refs:
 
 	private Moving moving;
