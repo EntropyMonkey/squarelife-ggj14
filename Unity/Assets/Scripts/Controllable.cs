@@ -8,13 +8,13 @@ public class Controllable : MonoBehaviour {
     private Moving moving;
     private Jumping jumping;
 
-    public void Awake ()
+    void Awake ()
     {
 		moving = GetComponent<Moving>();
         jumping = GetComponent<Jumping>();
     }
 
-    public void FixedUpdate()
+    void FixedUpdate()
     {
         moving.SetDirection(Input.GetAxis("Horizontal"));
         jumping.SetJumping(Input.GetButton(JUMP));

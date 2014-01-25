@@ -5,7 +5,7 @@ namespace Assets.Scripts
 {
     class Walking : Moving
     {
-        private const float GROUND_DISTANCE_TOLERANCE = .01f;
+        private const float GROUND_DISTANCE_TOLERANCE = 0.2f;
 
         public float MaxSpeed = 10;
         public float MaxSpeedDeceleration = 300;
@@ -16,7 +16,7 @@ namespace Assets.Scripts
         {
             get
             {
-                return Physics.Raycast(transform.position, -Vector3.up, collider.bounds.extents.y + GROUND_DISTANCE_TOLERANCE);
+                return Physics.Raycast(transform.position + Vector3.up * GROUND_DISTANCE_TOLERANCE * 0.5f, -Vector3.up, GROUND_DISTANCE_TOLERANCE);
             }
         }
 
@@ -27,7 +27,7 @@ namespace Assets.Scripts
             this.direction = direction;
         }
 
-        public void FixedUpdate()
+        void FixedUpdate()
         {
             //World axes: (camera-axis, up-down, left-right)
             bool grounded = Grounded;

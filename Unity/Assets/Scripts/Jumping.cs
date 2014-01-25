@@ -15,12 +15,12 @@ namespace Assets.Scripts
             this.jumping = jumping;
         }
 
-        public void Awake()
+        void Awake()
         {
             moving = GetComponent<Moving>();
         }
 
-        public void FixedUpdate()
+        void FixedUpdate()
         {
             if (jumping && moving.Grounded)
             {
@@ -28,6 +28,8 @@ namespace Assets.Scripts
                     0,
                     Speed,
                     0);
+
+				Debug.Log(1);
             }
         }
     }
