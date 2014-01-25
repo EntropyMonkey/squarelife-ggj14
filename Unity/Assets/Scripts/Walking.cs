@@ -20,6 +20,8 @@ namespace Assets.Scripts
             }
         }
 
+        private PlayerScaler scaler;
+
         private float direction = 0;
 
         public override void SetDirection(float direction)
@@ -27,26 +29,31 @@ namespace Assets.Scripts
             this.direction = direction;
         }
 
+        void Awake()
+        {
+            scaler = GetComponent<PlayerScaler>();
+        }
+
         void FixedUpdate()
         {
             //World axes: (camera-axis, up-down, left-right)
             bool grounded = Grounded;
+            float scale = scaler != null ? scaler.Scale : 1;
             if (direction != 0)
             {
-                float delta = Time.deltaTime * (grounded ? GroundAcceleration : AirAcceleration) * direction;
                 rigidbody.velocity += new Vector3(
                     0,
                     0,
-                    delta);
+                    Time.deltaTime * scale * (grounded ? GroundAcceleration : AirAcceleration) * direction);
             }
             else if (grounded)
             {
-                if (Mathf.Abs(rigidbody.velocity.z) > Time.deltaTime * GroundDeceleration)
+                if (Mathf.Abs(rigidbody.velocity.z) > Time.deltaTime * scale * GroundDeceleration)
                 {
                     rigidbody.velocity -= new Vector3(
                         0,
                         0,
-                        Mathf.Sign(rigidbody.velocity.z) * Time.deltaTime * GroundDeceleration);
+                        Mathf.Sign(rigidbody.velocity.z) * Time.deltaTime * scale * GroundDeceleration);
                 }
                 else
                 {
@@ -56,21 +63,21 @@ namespace Assets.Scripts
                         0);
                 }
             }
-            if (Mathf.Abs(rigidbody.velocity.z) > MaxSpeed)
+            if (Mathf.Abs(rigidbody.velocity.z) > scale * MaxSpeed)
             {
-                if (rigidbody.velocity.z > MaxSpeed + Time.deltaTime * MaxSpeedDeceleration)
+                if (rigidbody.velocity.z > MaxSpeed + Time.deltaTime * scale * MaxSpeedDeceleration)
                 {
                     rigidbody.velocity -= new Vector3(
                         0,
                         0,
-                        Mathf.Sign(rigidbody.velocity.z) * Time.deltaTime * MaxSpeedDeceleration);
+                        Mathf.Sign(rigidbody.velocity.z) * Time.deltaTime * scale * MaxSpeedDeceleration);
                 }
                 else
                 {
                     rigidbody.velocity = new Vector3(
                         rigidbody.velocity.x,
                         rigidbody.velocity.y,
-                        Mathf.Sign(rigidbody.velocity.z) * MaxSpeed);
+                        Mathf.Sign(rigidbody.velocity.z) * scale * MaxSpeed);
                 }
             }
         }
