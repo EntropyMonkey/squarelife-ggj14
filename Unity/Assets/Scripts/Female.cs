@@ -5,7 +5,7 @@ public class Female : MonoBehaviour
 {
     public Transform ChildAttachmentPoint;
     public Transform ChildPrefab;
-    public Transform PlayerPrefab;
+    public GameObject PlayerPrefab;
     public Transform Child { get; private set; }
 
     public Female()
