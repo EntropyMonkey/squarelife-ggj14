@@ -13,14 +13,17 @@ public class Female : MonoBehaviour
         Child = null;
     }
 
-    public void SwitchToChild()
+    public bool SwitchToChild()
     {
         Debug.Log("Female: Switch to child if any");
-        if (Child != null)
+        bool child = Child != null;
+        if (child)
         {
             Debug.Log("Female: Switching to child");
+            DeathManager.Instance().Player = null;
             Instantiate(PlayerPrefab, Child.position, Child.rotation);
         }
+        return child;
     }
 
     void OnCollisionEnter(Collision collision)

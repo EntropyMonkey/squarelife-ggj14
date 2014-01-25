@@ -48,6 +48,7 @@ public class PlayerController : Controller
 	// Use this for initialization
 	void Start()
 	{
+        Debug.Log("PlayerController: Switching DeathManager.Player to " + mortal);
         DeathManager.Instance().Player = mortal;
 	}
 
@@ -81,8 +82,11 @@ public class PlayerController : Controller
     {
         if (die)
         {
-            female.SwitchToChild();
-            mortal.Kill(this);
+            if (female.SwitchToChild())
+            {
+                Debug.Log("Switched to child, kill parent");
+                mortal.Kill(this);
+            }
         }
     }
 }
