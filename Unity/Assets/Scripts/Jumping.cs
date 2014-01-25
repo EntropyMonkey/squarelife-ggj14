@@ -28,8 +28,6 @@ namespace Assets.Scripts
                     0,
                     Speed,
                     0);
-
-				Debug.Log(1);
             }
         }
     }
