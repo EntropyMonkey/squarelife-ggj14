@@ -21,7 +21,6 @@ public class Walking : Moving
 
 	// private vars:
     private float direction = 0;
-	private int groundedColliderCounter = 0; // counts all ground colliders in contact
 
     public override void SetDirection(float direction)
     {
