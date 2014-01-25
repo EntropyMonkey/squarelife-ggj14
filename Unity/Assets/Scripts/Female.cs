@@ -5,7 +5,7 @@ public class Female : MonoBehaviour
 {
     public Transform ChildAttachmentPoint;
     public Transform ChildPrefab;
-    public Transform PlayerPrefab;
+    public Instantiator PlayerPrefabInstantiator;
     public Transform Child { get; private set; }
 
     public Female()
@@ -21,7 +21,8 @@ public class Female : MonoBehaviour
         {
             Debug.Log("Female: Switching to child");
             DeathManager.Instance().Player = null;
-            Instantiate(PlayerPrefab, Child.position, Child.rotation);
+            Transform player = PlayerPrefabInstantiator.Instantiate(Child.position, Child.rotation);
+            Camera.main.GetComponent<PlayerCamera>().player = player.GetComponent<PlayerController>();
         }
         return child;
     }
