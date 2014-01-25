@@ -44,7 +44,7 @@ namespace Assets.Scripts
                 rigidbody.velocity += new Vector3(
                     0,
                     0,
-                    Time.deltaTime * scale * (grounded ? GroundAcceleration : AirAcceleration) * direction);
+                    Time.deltaTime * scale * (grounded ? GroundAcceleration : AirAcceleration) * Mathf.Sign(direction));
             }
             else if (grounded)
             {
