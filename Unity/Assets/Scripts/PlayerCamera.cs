@@ -3,8 +3,7 @@ using System.Collections;
 
 public class PlayerCamera : MonoBehaviour
 {
-	[SerializeField]
-	private PlayerController player;
+	public PlayerController player;
 
 	[SerializeField]
 	private float minSize = 5;

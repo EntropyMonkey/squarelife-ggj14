@@ -24,12 +24,16 @@ public class DeathManager {
         }
         set
         {
+            Debug.Log("DeathManager: Switching player from " + (player != null ? player.ToString() : "null") + " to " + (value != null ? value.ToString() : "null"));
             if (player != null)
             {
                 player.Killed.RemoveListener(deathHandler);
             }
             player = value;
-            value.Killed.AddListener(deathHandler);
+            if (value != null)
+            {
+                value.Killed.AddListener(deathHandler);
+            }
         }
     }
 }

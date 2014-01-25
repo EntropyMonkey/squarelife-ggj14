@@ -7,6 +7,7 @@ public class Mortal : MonoBehaviour
 
     public void Kill(MonoBehaviour killer)
     {
+        Debug.Log("Mortal: Killing " + this + " (killer: " + killer + ")");
         Destroy(gameObject);
         Killed.Dispatch(killer);
     }
