@@ -5,7 +5,7 @@ using System.Collections;
 /// The Player's logic - input
 /// </summary>
 
-[RequireComponent(typeof(Moving), typeof(Jumping), typeof(PlayerScaler))]
+[RequireComponent(typeof(Moving), typeof(Jumping))]
 public class PlayerController : Controller
 {
 	// editor variables:
@@ -36,11 +36,9 @@ public class PlayerController : Controller
 
 	private Moving moving;
 	private Jumping jumping;
-	private PlayerScaler scaler;
 
 	void Awake()
 	{
-		scaler = GetComponent<PlayerScaler>();
 		moving = GetComponent<Moving>();
 		jumping = GetComponent<Jumping>();
 	}
@@ -65,5 +63,15 @@ public class PlayerController : Controller
 	public override void Jump(bool jump)
 	{
 		jumping.SetJumping(jump);
+	}
+
+	public void LandedOn(Collider other)
+	{
+		moving.Grounded = true;
+	}
+
+	public void JumpedOff(Collider other)
+	{
+		moving.Grounded = false;
 	}
 }

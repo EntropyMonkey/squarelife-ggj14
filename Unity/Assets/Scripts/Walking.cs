@@ -13,7 +13,7 @@ public class Walking : Moving
 	public override bool Grounded
 	{
 		get;
-		protected set;
+		set;
 	}
 
 	// component refs:
@@ -80,28 +80,23 @@ public class Walking : Moving
         }
     }
 
-	void OnCollisionEnter(Collision collision)
-	{
-		if (collision.transform.position.y - transform.position.y < 0)
-		{
-			if (!Grounded)
-				groundedColliderCounter++;
+	//void OnCollisionEnter(Collision collision)
+	//{
+	//	Vector3 diff = collision.transform.position - transform.position;
+	//	if (diff.y + collision.collider.bounds.extents.y - collider.bounds.extents.y < 0)
+	//	{
+	//		Debug.Log("Ground");
+	//		Grounded = true;
+	//	}
+	//}
 
-			Grounded = true;
-			Debug.Log("Grounded");
-		}
-	}
-
-	void OnCollisionExit(Collision collision)
-	{
-		if (Grounded && collision.transform.position.y - transform.position.y < 0)
-		{
-			groundedColliderCounter--;
-			if (groundedColliderCounter == 0)
-			{
-				Debug.Log("Airborne");
-				Grounded = false;
-			}
-		}
-	}
+	//void OnCollisionExit(Collision collision)
+	//{
+	//	Vector3 diff = collision.transform.position - transform.position;
+	//	if (diff.y < 0)
+	//	{
+	//		Debug.Log("Airborne");
+	//		Grounded = false;
+	//	}
+	//}
 }
