@@ -11,15 +11,8 @@ using System.Collections;
 [RequireComponent(typeof(Moving))]
 public class PlayerController : Controller
 {
-    private float age;
-
-	// editor variables:
-
-	/// <summary>
-	/// Max age in seconds
-	/// </summary>
-	[SerializeField]
-	private float maxAge;
+    public float Age = 0;
+	public float Lifetime = 30;
 
 	// publics:
 
@@ -39,7 +32,7 @@ public class PlayerController : Controller
 
     public PlayerController()
     {
-        NormalizedAge = age = 0;
+        NormalizedAge = Age = 0;
     }
 
 	// component refs:
@@ -66,9 +59,8 @@ public class PlayerController : Controller
 	// Update is called once per frame
 	void Update()
 	{
-        age += Time.deltaTime;
-		NormalizedAge = age / maxAge;
-		NormalizedAge = Mathf.Min(1, NormalizedAge);
+        Age = Mathf.Min(Age + Time.deltaTime, Lifetime);
+		NormalizedAge = Age / Lifetime;
 	}
 
 	public override void MoveHorizontal(float axisValue)
