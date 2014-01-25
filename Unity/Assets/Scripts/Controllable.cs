@@ -6,12 +6,12 @@ public class Controllable : MonoBehaviour {
     private const string JUMP = "Jump";
 
     private Moving moving;
-    private Jumping jumping;
+  //  private Jumping jumping;
 
     public void Awake ()
     {
-        moving = GetComponent<Moving>();
-        jumping = GetComponent<Jumping>();
+		moving = GetComponent(typeof(Moving)) as Moving;
+        //jumping = GetComponent<Jumping>();
     }
 
     public void Update()
@@ -19,7 +19,7 @@ public class Controllable : MonoBehaviour {
         moving.SetDirection(new Vector2(
             Input.GetAxis("Horizontal"),
             Input.GetAxis("Vertical")));
-        jumping.SetJumping(Input.GetButtonDown(JUMP));
+        //jumping.SetJumping(Input.GetButtonDown(JUMP));
     }
 
 }

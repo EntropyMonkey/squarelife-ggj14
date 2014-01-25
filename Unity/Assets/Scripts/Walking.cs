@@ -3,15 +3,15 @@ using System.Collections;
 
 namespace Assets.Scripts
 {
-    class Walking : MonoBehaviour
+    class Walking : Moving
     {
         private const float GROUND_DISTANCE_TOLERANCE = .01f;
         private const float GROUND_SPEED_TOLERANCE = .01f;
 
-        public float MaxSpeed;
-        public float MaxSpeedDeceleration;
-        public float GroundAcceleration;
-        public float AirAcceleration;
+        public float MaxSpeed = 10;
+        public float MaxSpeedDeceleration = 2;
+        public float GroundAcceleration = 1;
+        public float AirAcceleration = 0.1f;
         public bool Grounded
         {
             get
@@ -22,7 +22,7 @@ namespace Assets.Scripts
 
         private Vector2 direction = Vector2.zero;
 
-        public void SetDirection(Vector2 direction)
+        public override void SetDirection(Vector2 direction)
         {
             this.direction = direction;
         }
