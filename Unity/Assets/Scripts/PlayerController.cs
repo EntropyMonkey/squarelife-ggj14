@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
 	/// <summary>
 	/// the player's current normalized age (0..1)
 	/// </summary>
-	public static float NormalizedAge
+	public float NormalizedAge
 	{
 		get;
 		private set;
