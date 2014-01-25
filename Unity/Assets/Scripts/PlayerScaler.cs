@@ -35,18 +35,7 @@ public class PlayerScaler : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		int direction = 0;
-		if (Input.GetKey(KeyCode.W))
-		{
-			direction = 1;
-		}
-		
-		if (Input.GetKey(KeyCode.S))
-		{
-			direction = -1;
-		}
-
-		ScaleMe(Scale + direction * maxScale * Time.deltaTime);
+		ScaleMe(maxScale * playerController.NormalizedAge);
 	}
 
 	void ScaleMe (float newScale)
