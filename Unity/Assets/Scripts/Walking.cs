@@ -78,7 +78,6 @@ public class Walking : Moving
 					Mathf.Sign(rigidbody.velocity.z) * controller.Scale * MaxSpeed - rigidbody.velocity.z);
             }
         }
-        Debug.Log(transform.position + "  " + rigidbody.velocity);
     }
 
 	void OnCollisionEnter(Collision collision)

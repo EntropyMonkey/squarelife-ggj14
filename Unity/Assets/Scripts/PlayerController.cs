@@ -42,12 +42,14 @@ public class PlayerController : Controller
 	private Moving moving;
 	private Jumping jumping;
 	private PlayerScaler scaler;
+    private Female female;
 
 	void Awake()
 	{
 		scaler = GetComponent<PlayerScaler>();
 		moving = GetComponent<Moving>();
 		jumping = GetComponent<Jumping>();
+        female = GetComponent<Female>();
 	}
 
 	// Use this for initialization
@@ -71,4 +73,12 @@ public class PlayerController : Controller
 	{
 		jumping.SetJumping(jump);
 	}
+
+    public override void Die(bool die)
+    {
+        if (die && female != null)
+        {
+            female.SwitchToChild();
+        }
+    }
 }
