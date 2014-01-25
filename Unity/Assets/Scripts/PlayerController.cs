@@ -5,8 +5,8 @@ using System.Collections;
 /// The Player's logic - input
 /// </summary>
 
-[RequireComponent(typeof(Moving), typeof(Jumping))]
-public class PlayerController : MonoBehaviour
+[RequireComponent(typeof(Moving), typeof(Jumping), typeof(PlayerScaler))]
+public class PlayerController : Controller
 {
 	// editor variables:
 
@@ -27,14 +27,25 @@ public class PlayerController : MonoBehaviour
 		private set;
 	}
 
+	public override bool Grounded
+	{
+		get { return moving.Grounded; }
+	}
+
+	public override float Scale
+	{
+		get { return scaler.Scale; }
+	}
+
 	// component refs:
 
 	private Moving moving;
 	private Jumping jumping;
+	private PlayerScaler scaler;
 
 	void Awake()
 	{
-
+		scaler = GetComponent<PlayerScaler>();
 		moving = GetComponent<Moving>();
 		jumping = GetComponent<Jumping>();
 	}
@@ -51,12 +62,12 @@ public class PlayerController : MonoBehaviour
 		NormalizedAge += Time.deltaTime / maxAge;
 	}
 
-	public void MoveHorizontal(float axisValue)
+	public override void MoveHorizontal(float axisValue)
 	{
 		moving.SetDirection(axisValue);
 	}
 
-	public void Jump(bool jump)
+	public override void Jump(bool jump)
 	{
 		jumping.SetJumping(jump);
 	}

@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using Assets.Scripts;
 
 public class PlayerInput : MonoBehaviour {
     private const string JUMP = "Jump";

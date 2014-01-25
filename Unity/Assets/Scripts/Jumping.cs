@@ -1,33 +1,33 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent(typeof(Controller))]
 class Jumping : MonoBehaviour
 {
-    public float Speed = 8;
+	[SerializeField]
+    private float Speed = 8;
 
     private bool jumping = false;
-    private Moving moving;
-    private PlayerScaler scaler;
 
-    public void SetJumping(bool jumping)
-    {
-        this.jumping = jumping;
-    }
+	private Controller controller;
 
     void Awake()
     {
-        moving = GetComponent<Moving>();
-        scaler = GetComponent<PlayerScaler>();
+		controller = GetComponent<Controller>();
     }
 
     void FixedUpdate()
     {
-        if (jumping && moving.Grounded)
+        if (jumping && controller.Grounded)
         {
             rigidbody.velocity += new Vector3(
                 0,
-                (scaler != null ? scaler.Scale : 1) * Speed,
+                (controller.Scale) * Speed,
                 0);
         }
     }
+	public void SetJumping(bool jumping)
+	{
+		this.jumping = jumping;
+	}
 }
