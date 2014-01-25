@@ -6,23 +6,23 @@ namespace Assets.Scripts
     class Walking : Moving
     {
         private const float GROUND_DISTANCE_TOLERANCE = .01f;
-        private const float GROUND_SPEED_TOLERANCE = .01f;
 
         public float MaxSpeed = 10;
-        public float MaxSpeedDeceleration = 2;
-        public float GroundAcceleration = 1;
-        public float AirAcceleration = 0.1f;
-        public bool Grounded
+        public float MaxSpeedDeceleration = 300;
+        public float GroundAcceleration = 150;
+        public float GroundDeceleration = 300;
+        public float AirAcceleration = 75;
+        public override bool Grounded
         {
             get
             {
-                return Mathf.Abs(rigidbody.velocity.y) <= GROUND_SPEED_TOLERANCE || Physics.Raycast(transform.position, -Vector3.up, collider.bounds.extents.y + GROUND_DISTANCE_TOLERANCE);
+                return Physics.Raycast(transform.position, -Vector3.up, collider.bounds.extents.y + GROUND_DISTANCE_TOLERANCE);
             }
         }
 
-        private Vector2 direction = Vector2.zero;
+        private float direction = 0;
 
-        public override void SetDirection(Vector2 direction)
+        public override void SetDirection(float direction)
         {
             this.direction = direction;
         }
@@ -31,20 +31,22 @@ namespace Assets.Scripts
         {
             //World axes: (camera-axis, up-down, left-right)
             bool grounded = Grounded;
-            if (direction != Vector2.zero)
+            if (direction != 0)
             {
-                Vector2 delta = Time.deltaTime * (grounded ? GroundAcceleration : AirAcceleration) * direction;
-                rigidbody.velocity += new Vector3(0, delta.y, delta.x);
-                direction = Vector2.zero;
+                float delta = Time.deltaTime * (grounded ? GroundAcceleration : AirAcceleration) * direction;
+                rigidbody.velocity += new Vector3(
+                    0,
+                    0,
+                    delta);
             }
             else if (grounded)
             {
-                if (Mathf.Abs(rigidbody.velocity.z) > Time.deltaTime * GroundAcceleration)
+                if (Mathf.Abs(rigidbody.velocity.z) > Time.deltaTime * GroundDeceleration)
                 {
-                    rigidbody.velocity = new Vector3(
-                        rigidbody.velocity.x,
-                        rigidbody.velocity.y,
-                        rigidbody.velocity.z - Mathf.Sign(rigidbody.velocity.z) * Time.deltaTime * GroundAcceleration);
+                    rigidbody.velocity -= new Vector3(
+                        0,
+                        0,
+                        Mathf.Sign(rigidbody.velocity.z) * Time.deltaTime * GroundDeceleration);
                 }
                 else
                 {
@@ -58,10 +60,10 @@ namespace Assets.Scripts
             {
                 if (rigidbody.velocity.z > MaxSpeed + Time.deltaTime * MaxSpeedDeceleration)
                 {
-                    rigidbody.velocity = new Vector3(
-                        rigidbody.velocity.x,
-                        rigidbody.velocity.y,
-                        rigidbody.velocity.z - Mathf.Sign(rigidbody.velocity.z) * Time.deltaTime * MaxSpeedDeceleration);
+                    rigidbody.velocity -= new Vector3(
+                        0,
+                        0,
+                        Mathf.Sign(rigidbody.velocity.z) * Time.deltaTime * MaxSpeedDeceleration);
                 }
                 else
                 {

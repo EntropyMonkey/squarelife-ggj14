@@ -14,12 +14,10 @@ public class Controllable : MonoBehaviour {
         //jumping = GetComponent<Jumping>();
     }
 
-    public void Update()
+    public void FixedUpdate()
     {
-        moving.SetDirection(new Vector2(
-            Input.GetAxis("Horizontal"),
-            Input.GetAxis("Vertical")));
-        //jumping.SetJumping(Input.GetButtonDown(JUMP));
+        moving.SetDirection(Input.GetAxis("Horizontal"));
+        jumping.SetJumping(Input.GetButton(JUMP));
     }
 
 }

@@ -3,23 +3,31 @@ using System.Collections;
 
 namespace Assets.Scripts
 {
-    abstract class Jumping : MonoBehaviour
+    class Jumping : MonoBehaviour
     {
-        private const float SPEED = 10;
+        public float Speed = 8;
 
         private bool jumping = false;
+        private Moving moving;
 
-        public abstract void SetJumping(bool jumping);
+        public void SetJumping(bool jumping)
+        {
+            this.jumping = jumping;
+        }
+
+        public void Awake()
+        {
+            moving = GetComponent<Moving>();
+        }
 
         public void FixedUpdate()
         {
-            if (jumping)
+            if (jumping && moving.Grounded)
             {
-                rigidbody.velocity = new Vector3(
-                    rigidbody.velocity.x,
-                    rigidbody.velocity.y,
-                    rigidbody.velocity.z + SPEED);
-                jumping = false;
+                rigidbody.velocity += new Vector3(
+                    0,
+                    Speed,
+                    0);
             }
         }
     }
