@@ -7,6 +7,11 @@ public class PlayerScaler : MonoBehaviour
 	// inspector variables:
 	[SerializeField]
 	private float maxScale = 20;
+    [SerializeField]
+    private float lowNormalizedAge = 0;
+    [SerializeField]
+    private float highNormalizedAge = .8f;
+    //Scaling is done so that at lowNorm and below, it is 1, and at highNorm and above, it is maxScale. The development in between is linear.
 
 	// public variables:
 	/// <summary>
@@ -35,16 +40,6 @@ public class PlayerScaler : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		ScaleMe(1 + maxScale * playerController.NormalizedAge);
-	}
-
-	void ScaleMe (float newScale)
-	{
-		newScale = Mathf.Min(newScale, maxScale);
-		newScale = Mathf.Max(newScale, 1);
-
-		Scale = newScale;
-
-		transform.localScale = Vector3.one * Scale;
+        transform.localScale = Vector3.one * (Scale = Mathf.Lerp(1, maxScale, Mathf.Clamp((playerController.NormalizedAge - lowNormalizedAge) / (highNormalizedAge - lowNormalizedAge), 0, 1)));
 	}
 }
