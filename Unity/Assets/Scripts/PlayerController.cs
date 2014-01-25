@@ -72,7 +72,7 @@ public class PlayerController : Controller
 	{
 		jumping.SetJumping(jump);
 	}
-	public void LandedOn(Collider other)
+	public void StandingOnCollider(Collider other)
 	{
 		moving.Grounded = true;
 	}

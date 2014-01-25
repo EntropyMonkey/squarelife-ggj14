@@ -32,7 +32,8 @@ public class PlayerCamera : MonoBehaviour
 		if (player == null)
 			return;
 
-		camera.orthographicSize = minSize + (maxSize - minSize) * player.NormalizedAge;
+		//camera.orthographicSize = minSize + (maxSize - minSize) * player.NormalizedAge;
+		camera.fieldOfView = minSize + (maxSize - minSize) * player.NormalizedAge;
 
 		Vector3 newPos = transform.position;
 		newPos.z = Mathf.Lerp(newPos.z, player.transform.position.z, speed * Time.deltaTime);
