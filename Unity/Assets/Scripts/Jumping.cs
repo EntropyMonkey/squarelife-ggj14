@@ -37,7 +37,7 @@ class Jumping : MonoBehaviour
         }
         if (jumping && timeout == 0 && moving.Grounded)
         {
-            rigidbody.velocity += Vector3.up * scale * Speed;
+            rigidbody.velocity += Vector3.up * Speed;
             timeout = TIMEOUT;
         }
     }
