@@ -41,7 +41,7 @@ public class Walking : Moving
 
     void FixedUpdate()
     {
-        float clamp = Mathf.Clamp((aging.Age - LowerAge) / (UpperAge - LowerAge), 0, 1);
+        float clamp = aging != null ? Mathf.Clamp((aging.Age - LowerAge) / (UpperAge - LowerAge), 0, 1) : 0;
         MaxSpeed = Mathf.Lerp(LowerMaxSpeed, UpperMaxSpeed, clamp);
         MaxSpeedDeceleration = Mathf.Lerp(LowerMaxSpeedDeceleration, UpperMaxSpeedDeceleration, clamp);
         GroundAcceleration = Mathf.Lerp(LowerGroundAcceleration, UpperGroundAcceleration, clamp);

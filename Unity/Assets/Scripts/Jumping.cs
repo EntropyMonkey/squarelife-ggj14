@@ -25,7 +25,7 @@ class Jumping : MonoBehaviour
 
     void FixedUpdate()
     {
-        float clamp = Mathf.Clamp((aging.Age - LowerAge) / (UpperAge - LowerAge), 0, 1);
+        float clamp = aging != null ? Mathf.Clamp((aging.Age - LowerAge) / (UpperAge - LowerAge), 0, 1) : 0;
         Speed = Mathf.Lerp(LowerSpeed, UpperSpeed, clamp);
         if (!moving.Grounded)
         {
