@@ -10,21 +10,35 @@ public class Breeding : MonoBehaviour
 
     public Dispatcher<Transform> SwitchedToChild = new Dispatcher<Transform>();
 
+    private Colored colored;
+
     public Breeding()
     {
         Child = null;
     }
 
+    void Awake()
+    {
+        colored = GetComponent<Colored>();
+    }
+
     public void SetSwitching(bool switching)
     {
-        SwitchToChild();
+        if (switching)
+        {
+            SwitchToChild();
+        }
     }
 
     public void SwitchToChild()
     {
         if (Child != null)
         {
-            SwitchedToChild.Dispatch(PlayerPrefabInstantiator.Instantiate(Child.position, Child.rotation).transform);
+            Transform child = PlayerPrefabInstantiator.Instantiate(Child.position, Child.rotation).transform;
+            Colored childColored = child.GetComponent<Colored>();
+            childColored.world = colored.world;
+            childColored.Color = Child.GetComponent<Colored>().Color;
+            SwitchedToChild.Dispatch(child);
         }
     }
 
@@ -39,6 +53,7 @@ public class Breeding : MonoBehaviour
                 {
                     Child = (Transform)Instantiate(ChildPrefab, ChildAttachmentPoint.position, ChildAttachmentPoint.rotation);
                     Child.parent = ChildAttachmentPoint;
+                    Child.GetComponent<Colored>().Color = colored.Blend(partner.Colored);
                     partner.Mate(this);
                     break;
                 }
