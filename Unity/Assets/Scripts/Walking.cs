@@ -22,7 +22,7 @@ public class Walking : Moving
     public float GroundDeceleration { get; private set; }
     public float AirAcceleration { get; private set; }
 
-    private Aging aging;
+    private Age aging;
 
     public override bool Grounded
     {
@@ -36,12 +36,12 @@ public class Walking : Moving
 
     void Awake()
     {
-        aging = GetComponent<Aging>();
+        aging = GetComponent<Age>();
     }
 
     void FixedUpdate()
     {
-        float clamp = aging != null ? Mathf.Clamp((aging.Age - LowerAge) / (UpperAge - LowerAge), 0, 1) : 0;
+        float clamp = aging != null ? Mathf.Clamp((aging.age - LowerAge) / (UpperAge - LowerAge), 0, 1) : 0;
         MaxSpeed = Mathf.Lerp(LowerMaxSpeed, UpperMaxSpeed, clamp);
         MaxSpeedDeceleration = Mathf.Lerp(LowerMaxSpeedDeceleration, UpperMaxSpeedDeceleration, clamp);
         GroundAcceleration = Mathf.Lerp(LowerGroundAcceleration, UpperGroundAcceleration, clamp);

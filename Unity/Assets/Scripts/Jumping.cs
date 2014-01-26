@@ -15,17 +15,17 @@ class Jumping : MonoBehaviour
     private bool jumping = false;
     private float timeout = 0;
     private Moving moving;
-    private Aging aging;
+    private Age aging;
 
     void Awake()
     {
         moving = GetComponent<Moving>();
-        aging = GetComponent<Aging>();
+        aging = GetComponent<Age>();
     }
 
     void FixedUpdate()
     {
-        float clamp = aging != null ? Mathf.Clamp((aging.Age - LowerAge) / (UpperAge - LowerAge), 0, 1) : 0;
+        float clamp = aging != null ? Mathf.Clamp((aging.age - LowerAge) / (UpperAge - LowerAge), 0, 1) : 0;
         Speed = Mathf.Lerp(LowerSpeed, UpperSpeed, clamp);
         if (!moving.Grounded)
         {

@@ -33,3 +33,4 @@ Unity/Assets/Meshes
 Unity/Assets/iTween
 *.csproj
 *.sln
+*.orig
