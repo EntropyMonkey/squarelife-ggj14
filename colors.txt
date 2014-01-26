@@ -1,0 +1,189 @@
+Red:
+
+Shade +2: 106,0,4
+
+Shade +1: 246,0,10
+
+Ground Color: 170,0,7
+
+Shade -1: 183,0,8
+
+Shade -2: 144,0,6
+
+COMPLEMENTARY: GREEN
+
+
+
+
+Yellow:
+
+Shade +2: 191,150,10
+
+Shade +1: 127,100,7
+
+Ground Color: 255,200,14
+
+Shade -1: 64,50,3
+
+Shade -2: 229,180,13
+
+COMPLEMENTARY: BLUE
+
+
+
+
+Blue:
+
+Shade +2: 34,59,191
+
+Shade +1: 22,39,127
+
+Ground Color: 45,79,255
+
+Shade -1: 11,20,64
+
+Shade -2: 40,71,229
+
+COMPLEMENTARY: YELLOW
+
+
+
+
+Green:
+
+Shade +2: 1,114,28
+
+Shade +1: 3,254,61
+
+Ground Color: 2,178,43
+
+Shade -1: 2,191,46		
+
+Shade -2: 2,152,37
+
+COMPLEMENTARY: RED
+
+
+
+
+Red + Yellow (orange):
+
+Shade +2: 149,70,8
+
+Shade +1: 85,40,4
+
+Ground Color: 213,100,11
+
+Shade -1: 226,106,12 
+
+Shade -2: 187,88,10
+
+COMPLEMENTARY: CYAN 
+
+
+
+
+Red + Blue (Purple):
+
+Shade +2: 55,21,67 
+
+Shade +1: 171,63,207 
+
+Ground Color: 108,40,131 
+
+Shade -1: 119,44,144 
+
+Shade -2: 87.32.105 
+
+COMPLEMENTARY: YELLOWISH GREEN
+
+
+
+
+
+Red + Green (Dirty Yellow):
+
+Shade +2: 22,229,64	 
+
+Shade +1: 160,165,46 
+
+Ground Color: 86,89,25 
+
+Shade -1: 98,102,29 
+
+Shade -2: 61,63,18
+
+COMPLEMENTARY: PURPLE
+
+
+
+
+
+Yellow + Blue (Grey - Whiteish):
+
+Shade +2: 86,80,78 
+
+Shade +1: 226,211,204
+
+Ground Color: 150,140,135 
+
+Shade -1: 163,152,146
+
+Shade -2: 124,116,112
+
+COMPLEMENTARY: DARK GREEN / BLUE
+
+
+
+
+Dark Green / Blue
+
+Shade +2: 159,226,222 
+
+Shade +1: 114,163,159
+
+Ground Color: 60,86,84 
+
+Shade -1: 69,99,97
+
+Shade -2: 43,61,59
+
+COMPLEMENTARY: GREY WHITEISH
+
+
+
+
+Yellow + Green (Yellowish Green):
+
+Shade +2: 85,125,19	 
+
+Shade +1: 42,61,9 
+
+Ground Color: 129,189,29
+
+Shade -1: 138,202,31
+
+Shade -2: 112,163,25
+
+COMPLEMENTARY: PURPLE 
+
+
+
+
+Blue + Green (Turquoise /cyan):
+
+Shade +2: 14,74,85 
+
+Shade +1: 36,195,225
+
+Ground Color: 24,129,149
+
+Shade -1: 26,140,162
+
+Shade -2: 20,107,123
+
+COMPLEMENTARY: ORANGE
+
+
+
+

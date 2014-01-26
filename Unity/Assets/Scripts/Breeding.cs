@@ -6,9 +6,32 @@ public class Breeding : MonoBehaviour
     public Transform ChildAttachmentPoint;
     public Transform ChildPrefab;
     public Instantiator PlayerPrefabInstantiator;
+	public int HeartsNeededToBreed = 1;
+	public ParticleSystem heartBeatParticles;
+	public int heartBeatEmission = 10;
+
     public Transform Child { get; private set; }
     public Dispatcher<Transform> SwitchedToChild = new Dispatcher<Transform>();
-    public int Hearts = 0;
+	public int Hearts
+	{
+		get { return hearts; }
+		set 
+		{ 
+			hearts = value;
+
+			if (heartBeatParticles == null) heartBeatParticles = GetComponentInChildren<ParticleSystem>();
+
+			if (hearts > 0)
+			{
+				heartBeatParticles.emissionRate = heartBeatEmission;
+			}
+			else
+			{
+				heartBeatParticles.emissionRate = 0;
+			}
+		}
+	}
+	int hearts = 0;
 
     private Colored colored;
 
@@ -20,6 +43,7 @@ public class Breeding : MonoBehaviour
     void Awake()
     {
         colored = GetComponent<Colored>();
+		Hearts = 0;
     }
 
     void OnGUI()
@@ -51,13 +75,13 @@ public class Breeding : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         Partner partner = collision.gameObject.GetComponent<Partner>();
-        if (partner != null && Child == null && Hearts >= 3)
+        if (partner != null && Child == null && Hearts >= HeartsNeededToBreed)
         {
             Child = (Transform)Instantiate(ChildPrefab, ChildAttachmentPoint.position, ChildAttachmentPoint.rotation);
             Child.parent = ChildAttachmentPoint;
             Child.GetComponent<Colored>().Color = colored.Blend(partner.Colored);
             partner.Mate(this);
-            Hearts -= 3;
+            Hearts -= HeartsNeededToBreed;
         }
     }
 
