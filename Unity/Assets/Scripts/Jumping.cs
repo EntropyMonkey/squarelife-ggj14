@@ -27,7 +27,6 @@ class Jumping : MonoBehaviour
         if (jumping && controller.Grounded)
         {
             rigidbody.velocity += Vector3.up * Mathf.Lerp(MinSpeed, MaxSpeed, controller.NormalizedAge);
-			Debug.Log(rigidbody.velocity);
         }
 		else
 		{
