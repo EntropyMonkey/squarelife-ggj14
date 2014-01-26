@@ -12,7 +12,7 @@ public class Partner : MonoBehaviour {
 
     void Start()
     {
-        Colored.Color = Colored.RandomColor();
+       // Colored.Color = Colored.RandomColor();
     }
 
     public void Mate(Breeding partner)

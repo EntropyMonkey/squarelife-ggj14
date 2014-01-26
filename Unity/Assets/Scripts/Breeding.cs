@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class Breeding : IReset
 {
@@ -34,6 +35,7 @@ public class Breeding : IReset
 	int hearts = 0;
 
     private Colored colored;
+	ColorCombo futureColors;
 
     void Awake()
 	{
@@ -61,7 +63,7 @@ public class Breeding : IReset
         {
             //Transform child = PlayerPrefabInstantiator.Instantiate(Child.position, Child.rotation).transform;
             
-            colored.Color = Child.GetComponent<Colored>().Color;
+			colored.SetCombo(futureColors);
 
 			GetComponent<Resettable>().Reset();
 
@@ -76,7 +78,14 @@ public class Breeding : IReset
         {
             Child = (Transform)Instantiate(ChildPrefab, ChildAttachmentPoint.position, ChildAttachmentPoint.rotation);
             Child.parent = ChildAttachmentPoint;
-            Child.GetComponent<Colored>().Color = colored.Blend(partner.Colored);
+			
+			// get combined new color
+			ColorName childColor = (ColorName)(UnityEngine.Random.Range(0, Enum.GetNames(typeof(ColorName)).Length));
+
+			ColorManager colorManager = FindObjectOfType<ColorManager>();
+			futureColors = colorManager.ColorCombos.Find(item => item.PlayerColor == childColor);
+
+            Child.GetComponent<Colored>().Color = futureColors.baseColor;//colored.Blend(partner.Colored);
             partner.Mate(this);
             Hearts -= HeartsNeededToBreed;
         }

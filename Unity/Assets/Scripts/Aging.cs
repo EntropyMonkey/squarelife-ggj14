@@ -30,7 +30,7 @@ public class Aging : IReset {
 
 	public override void Reset()
 	{
-		Age = 0;
+		Age.age = 0;
 		AbsoluteAge = 0;
 	}
 }

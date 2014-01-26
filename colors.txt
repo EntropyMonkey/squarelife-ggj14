@@ -101,7 +101,7 @@ COMPLEMENTARY: YELLOWISH GREEN
 
 
 
-Red + Green (Dirty Yellow):
+Red + Green (Dirty Yellow/Beige):
 
 Shade +2: 22,229,64	 
 

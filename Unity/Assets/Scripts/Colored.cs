@@ -6,23 +6,39 @@ public class Colored : MonoBehaviour
 {
 	public ColoredWorld world = null;
 
+	ColorManager colorManager;
+
+	public ColorName MyColor;
+
 	private Color color;
 	public Color Color
 	{
 		set
 		{
-			renderer.sharedMaterial.color = color = value;
-			if (world != null)
-			{
-				float h, s, v;
-				EditorGUIUtility.RGBToHSV(color, out h, out s, out v);
-				world.Color = EditorGUIUtility.HSVToRGB(h + .5f, s, v);
-			}
+			renderer.material.color = color = value;
+			//if (world != null)
+			//{
+			//	float h, s, v;
+			//	EditorGUIUtility.RGBToHSV(color, out h, out s, out v);
+			//	world.Color = EditorGUIUtility.HSVToRGB(h + .5f, s, v);
+			//}
 		}
 		get
 		{
 			return color;
 		}
+	}
+
+	void Start()
+	{
+		colorManager = FindObjectOfType<ColorManager>();
+		if (tag == "Player") SetCombo(colorManager.ColorCombos.Find(item => item.PlayerColor == MyColor));
+	}
+
+	public void SetCombo(ColorCombo combo)
+	{
+		Color = colorManager.ColorCombos.Find(item => item.PlayerColor == combo.Complementary).baseColor;
+		colorManager.SetWorldColors(combo);
 	}
 
 	public Color Blend(Colored other)
