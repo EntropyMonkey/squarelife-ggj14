@@ -1,39 +1,42 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[RequireComponent(typeof(Controller))]
+[RequireComponent(typeof(Moving))]
 class Jumping : MonoBehaviour
 {
-	[SerializeField]
-    private float MinSpeed = 8;
+    public FloatStat Speed = 8;
 
-	[SerializeField]
-	private float MaxSpeed = 10;
-
-	[SerializeField]
-	private float Gravity = 20;
+    private const float TIMEOUT = .1f;
 
     private bool jumping = false;
-
-	private Controller controller;
+    private float timeout = 0;
+    private Moving moving;
+    private Scaling scaling;
 
     void Awake()
     {
-		controller = GetComponent<Controller>();
+        moving = GetComponent<Moving>();
+        scaling = GetComponent<Scaling>();
     }
 
     void FixedUpdate()
     {
-        if (jumping && controller.Grounded)
+        float scale = scaling != null ? scaling.Scale : 1;
+        if (!moving.Grounded)
         {
-            rigidbody.velocity += Vector3.up * Mathf.Lerp(MinSpeed, MaxSpeed, controller.NormalizedAge);
-			Debug.Log(rigidbody.velocity);
+            timeout = 0;
         }
-		else
-		{
-			rigidbody.velocity += Vector3.down * Gravity * Time.deltaTime;
-		}
+        else if (timeout != 0)
+        {
+            timeout = Mathf.Max(timeout - Time.deltaTime, 0);
+        }
+        if (jumping && timeout == 0 && moving.Grounded)
+        {
+            rigidbody.velocity += Vector3.up * scale * Speed;
+            timeout = TIMEOUT;
+        }
     }
+
 	public void SetJumping(bool jumping)
 	{
 		this.jumping = jumping;

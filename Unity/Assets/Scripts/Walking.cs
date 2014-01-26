@@ -1,101 +1,66 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[RequireComponent(typeof(Controller))]
 public class Walking : Moving
 {
-    public float MaxSpeed = 10;
-    public float MaxSpeedDeceleration = 300;
-    public float GroundAcceleration = 150;
-    public float GroundDeceleration = 300;
-    public float AirAcceleration = 75;
+    public FloatStat MaxSpeed = 10;
+    public FloatStat MaxSpeedDeceleration = 300;
+    public FloatStat GroundAcceleration = 150;
+    public FloatStat GroundDeceleration = 300;
+    public FloatStat AirAcceleration = 75;
+    public WorldCollider GroundCollider;
 
-	public override bool Grounded
-	{
-		get;
-		set;
-	}
+    private Scaling scaling;
 
-	// component refs:
-    private Controller controller;
-
-	// private vars:
-    private float direction = 0;
-
-    public override void SetDirection(float direction)
+    public override bool Grounded
     {
-        this.direction = direction;
+        get
+        {
+            return GroundCollider.Colliding;
+        }
     }
+
+    private float direction = 0;
 
     void Awake()
     {
-		controller = GetComponent(typeof(Controller)) as Controller;
+        scaling = GetComponent<Scaling>();
     }
 
     void FixedUpdate()
     {
         //World axes: (camera-axis, up-down, left-right)
-        bool grounded = Grounded;
+        float scale = scaling != null ? scaling.Scale : 1;
         if (direction != 0)
         {
-            rigidbody.velocity += new Vector3(
-                0,
-                0,
-                Time.deltaTime * controller.Scale * Mathf.Sign(direction) * (grounded ? GroundAcceleration : AirAcceleration));
+            rigidbody.velocity += Vector3.forward * Mathf.Sign(direction) * Time.deltaTime * scale * (Grounded ? GroundAcceleration : AirAcceleration);
         }
-        else if (grounded)
+        else if (Grounded)
         {
-			if (Mathf.Abs(rigidbody.velocity.z) > Time.deltaTime * controller.Scale * GroundDeceleration)
+            if (Mathf.Abs(rigidbody.velocity.z) > Time.deltaTime * scale * GroundDeceleration)
             {
-                rigidbody.velocity -= new Vector3(
-                    0,
-                    0,
-					Mathf.Sign(rigidbody.velocity.z) * Time.deltaTime * controller.Scale * GroundDeceleration);
+                rigidbody.velocity -= Vector3.forward * Mathf.Sign(rigidbody.velocity.z) * Time.deltaTime * scale * GroundDeceleration;
             }
             else
             {
-                rigidbody.velocity -= new Vector3(
-                    0,
-                    0,
-                    rigidbody.velocity.z);
+                rigidbody.velocity -= Vector3.forward * rigidbody.velocity.z;
             }
         }
-		if (Mathf.Abs(rigidbody.velocity.z) > controller.Scale * MaxSpeed)
+        if (Mathf.Abs(rigidbody.velocity.z) > scale * MaxSpeed)
         {
-			if (rigidbody.velocity.z > MaxSpeed + Time.deltaTime * controller.Scale * MaxSpeedDeceleration)
+            if (Mathf.Abs(rigidbody.velocity.z) > scale * MaxSpeed + Time.deltaTime * scale * MaxSpeedDeceleration)
             {
-                rigidbody.velocity -= new Vector3(
-                    0,
-                    0,
-					Mathf.Sign(rigidbody.velocity.z) * Time.deltaTime * controller.Scale * MaxSpeedDeceleration);
+                rigidbody.velocity -= Vector3.forward * Mathf.Sign(direction) * Time.deltaTime * scale * MaxSpeedDeceleration;
             }
             else
             {
-                rigidbody.velocity += new Vector3(
-                    0,
-                    0,
-					Mathf.Sign(rigidbody.velocity.z) * controller.Scale * MaxSpeed - rigidbody.velocity.z);
+                rigidbody.velocity += Vector3.forward * (Mathf.Sign(rigidbody.velocity.z) * scale * MaxSpeed - rigidbody.velocity.z);
             }
         }
     }
 
-	//void OnCollisionEnter(Collision collision)
-	//{
-	//	Vector3 diff = collision.transform.position - transform.position;
-	//	if (diff.y + collision.collider.bounds.extents.y - collider.bounds.extents.y < 0)
-	//	{
-	//		Debug.Log("Ground");
-	//		Grounded = true;
-	//	}
-	//}
-
-	//void OnCollisionExit(Collision collision)
-	//{
-	//	Vector3 diff = collision.transform.position - transform.position;
-	//	if (diff.y < 0)
-	//	{
-	//		Debug.Log("Airborne");
-	//		Grounded = false;
-	//	}
-	//}
+    public override void SetDirection(float direction)
+    {
+        this.direction = direction;
+    }
 }
