@@ -1,34 +1,34 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[RequireComponent(typeof(Aging))]
+[RequireComponent(typeof(Age))]
 public class PlayerElderly : MonoBehaviour
 {
     public float LowerAge = .8f;
     public float UpperAge = 1;
 
-    private Aging aging;
+    private Age aging;
     private Breeding breeding;
     private Mortal mortal;
 
     void Awake()
     {
-        aging = GetComponent<Aging>();
+        aging = GetComponent<Age>();
         breeding = GetComponent<Breeding>();
         mortal = GetComponent<Mortal>();
     }
 
     void OnGUI()
     {
-        if (aging.Age >= LowerAge)
+        if (aging.age >= LowerAge)
         {
-            GUI.HorizontalSlider(new Rect(16, Screen.height - 32, Screen.width - 32, 16), aging.Age, LowerAge, UpperAge);
+            GUI.HorizontalSlider(new Rect(16, Screen.height - 32, Screen.width - 32, 16), aging.age, LowerAge, UpperAge);
         }
     }
 
     void FixedUpdate()
     {
-        if (aging.Age >= 1)
+        if (aging.age >= 1)
         {
             breeding.SwitchToChild();
             mortal.Kill(this);

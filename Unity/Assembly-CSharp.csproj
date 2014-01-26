@@ -662,15 +662,18 @@
      <Compile Include="Assets\PlayMaker\Actions\iTween\iTweenShakeScale.cs" />
      <Compile Include="Assets\PlayMaker\Actions\iTween\iTweenStop.cs" />
      <Compile Include="Assets\PlayMaker\Include\iTweenFSMEvents.cs" />
+     <Compile Include="Assets\Scripts\Age.cs" />
      <Compile Include="Assets\Scripts\Aging.cs" />
      <Compile Include="Assets\Scripts\Breeding.cs" />
      <Compile Include="Assets\Scripts\Colored.cs" />
      <Compile Include="Assets\Scripts\ColoredWorld.cs" />
      <Compile Include="Assets\Scripts\Controllable.cs" />
      <Compile Include="Assets\Scripts\Dispatcher.cs" />
+     <Compile Include="Assets\Scripts\EnemyAI.cs" />
      <Compile Include="Assets\Scripts\Heart.cs" />
      <Compile Include="Assets\Scripts\Instantiator.cs" />
      <Compile Include="Assets\Scripts\Jumping.cs" />
+     <Compile Include="Assets\Scripts\Killer.cs" />
      <Compile Include="Assets\Scripts\Killzone.cs" />
      <Compile Include="Assets\Scripts\Mortal.cs" />
      <Compile Include="Assets\Scripts\Moving.cs" />
@@ -678,6 +681,7 @@
      <Compile Include="Assets\Scripts\PartnerAI.cs" />
      <Compile Include="Assets\Scripts\PlayerCamera.cs" />
      <Compile Include="Assets\Scripts\PlayerElderly.cs" />
+     <Compile Include="Assets\Scripts\RandomAge.cs" />
      <Compile Include="Assets\Scripts\Scaling.cs" />
      <Compile Include="Assets\Scripts\SpiderController.cs" />
      <Compile Include="Assets\Scripts\Stat.cs" />

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[RequireComponent(typeof(Aging))]
+[RequireComponent(typeof(Age))]
 public class Scaling : MonoBehaviour
 {
     public float MaxScale = 3;
@@ -11,16 +11,16 @@ public class Scaling : MonoBehaviour
     public float Scale { get; private set; }
     public float Aspect { get; private set; }
 
-    private Aging aging;
+    private Age aging;
 
     void Awake()
     {
-        aging = GetComponent<Aging>();
+        aging = GetComponent<Age>();
     }
 
     void FixedUpdate()
     {
-        float clamp = Mathf.Clamp((aging.Age - LowerAge) / (UpperAge - LowerAge), 0, 1);
+        float clamp = Mathf.Clamp((aging.age - LowerAge) / (UpperAge - LowerAge), 0, 1);
         Scale = Mathf.Lerp(1, MaxScale, clamp);
         Aspect = Mathf.Lerp(1, MaxAspect, clamp);
         transform.localScale = new Vector3(

@@ -10,8 +10,8 @@ public class WorldCollider : MonoBehaviour
             return collisions > 0;
         }
     }
-    public Dispatcher<WorldCollider> CollisionBegun = new Dispatcher<WorldCollider>();
-    public Dispatcher<WorldCollider> CollisionEnded = new Dispatcher<WorldCollider>();
+    public Dispatcher<Collider> CollisionBegun = new Dispatcher<Collider>();
+    public Dispatcher<Collider> CollisionEnded = new Dispatcher<Collider>();
 
     private int collisions = 0;
 
@@ -21,7 +21,7 @@ public class WorldCollider : MonoBehaviour
         {
             if (collisions++ == 0)
             {
-                CollisionBegun.Dispatch(this);
+                CollisionBegun.Dispatch(other);
             }
         }
     }
@@ -32,7 +32,7 @@ public class WorldCollider : MonoBehaviour
         {
             if (--collisions == 0)
             {
-                CollisionEnded.Dispatch(this);
+                CollisionEnded.Dispatch(other);
             }
         }
     }
