@@ -4,24 +4,29 @@ using System.Collections;
 [RequireComponent(typeof(Moving))]
 class Jumping : MonoBehaviour
 {
-    public float Speed = 8;
-
     private const float TIMEOUT = .1f;
+
+    public float LowerSpeed = 8;
+    public float UpperSpeed = 12;
+    public float LowerAge = 0;
+    public float UpperAge = .8f;
+    public float Speed { get; private set; }
 
     private bool jumping = false;
     private float timeout = 0;
     private Moving moving;
-    private Scaling scaling;
+    private Aging aging;
 
     void Awake()
     {
         moving = GetComponent<Moving>();
-        scaling = GetComponent<Scaling>();
+        aging = GetComponent<Aging>();
     }
 
     void FixedUpdate()
     {
-        float scale = scaling != null ? scaling.Scale : 1;
+        float clamp = Mathf.Clamp((aging.Age - LowerAge) / (UpperAge - LowerAge), 0, 1);
+        Speed = Mathf.Lerp(LowerSpeed, UpperSpeed, clamp);
         if (!moving.Grounded)
         {
             timeout = 0;

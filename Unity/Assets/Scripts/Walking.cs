@@ -3,14 +3,26 @@ using System.Collections;
 
 public class Walking : Moving
 {
-    public float MaxSpeed = 10;
-    public float MaxSpeedDeceleration = 300;
-    public float GroundAcceleration = 150;
-    public float GroundDeceleration = 300;
-    public float AirAcceleration = 75;
+    public float LowerMaxSpeed = 8;
+    public float LowerMaxSpeedDeceleration = 200;
+    public float LowerGroundAcceleration = 130;
+    public float LowerGroundDeceleration = 200;
+    public float LowerAirAcceleration = 45;
+    public float UpperMaxSpeed = 12;
+    public float UpperMaxSpeedDeceleration = 300;
+    public float UpperGroundAcceleration = 200;
+    public float UpperGroundDeceleration = 300;
+    public float UpperAirAcceleration = 60;
+    public float LowerAge = 0;
+    public float UpperAge = .8f;
     public WorldCollider GroundCollider;
+    public float MaxSpeed { get; private set; }
+    public float MaxSpeedDeceleration { get; private set; }
+    public float GroundAcceleration { get; private set; }
+    public float GroundDeceleration { get; private set; }
+    public float AirAcceleration { get; private set; }
 
-    private Scaling scaling;
+    private Aging aging;
 
     public override bool Grounded
     {
@@ -24,38 +36,41 @@ public class Walking : Moving
 
     void Awake()
     {
-        scaling = GetComponent<Scaling>();
+        aging = GetComponent<Aging>();
     }
 
     void FixedUpdate()
     {
-        //World axes: (camera-axis, up-down, left-right)
-        //float scale = scaling != null ? scaling.Scale : 1;
-        float scale = 1;
+        float clamp = Mathf.Clamp((aging.Age - LowerAge) / (UpperAge - LowerAge), 0, 1);
+        MaxSpeed = Mathf.Lerp(LowerMaxSpeed, UpperMaxSpeed, clamp);
+        MaxSpeedDeceleration = Mathf.Lerp(LowerMaxSpeedDeceleration, UpperMaxSpeedDeceleration, clamp);
+        GroundAcceleration = Mathf.Lerp(LowerGroundAcceleration, UpperGroundAcceleration, clamp);
+        GroundDeceleration = Mathf.Lerp(LowerGroundDeceleration, UpperGroundDeceleration, clamp);
+        AirAcceleration = Mathf.Lerp(LowerAirAcceleration, UpperAirAcceleration, clamp);
         if (direction != 0)
         {
-            rigidbody.velocity += Vector3.forward * Mathf.Sign(direction) * Time.deltaTime * scale * (Grounded ? GroundAcceleration : AirAcceleration);
+            rigidbody.velocity += Vector3.forward * Mathf.Sign(direction) * Time.deltaTime * (Grounded ? GroundAcceleration : AirAcceleration);
         }
         else if (Grounded)
         {
-            if (Mathf.Abs(rigidbody.velocity.z) > Time.deltaTime * scale * GroundDeceleration)
+            if (Mathf.Abs(rigidbody.velocity.z) > Time.deltaTime * GroundDeceleration)
             {
-                rigidbody.velocity -= Vector3.forward * Mathf.Sign(rigidbody.velocity.z) * Time.deltaTime * scale * GroundDeceleration;
+                rigidbody.velocity -= Vector3.forward * Mathf.Sign(rigidbody.velocity.z) * Time.deltaTime * GroundDeceleration;
             }
             else
             {
                 rigidbody.velocity -= Vector3.forward * rigidbody.velocity.z;
             }
         }
-        if (Mathf.Abs(rigidbody.velocity.z) > scale * MaxSpeed)
+        if (Mathf.Abs(rigidbody.velocity.z) > MaxSpeed)
         {
-            if (Mathf.Abs(rigidbody.velocity.z) > scale * MaxSpeed + Time.deltaTime * scale * MaxSpeedDeceleration)
+            if (Mathf.Abs(rigidbody.velocity.z) > MaxSpeed + Time.deltaTime * MaxSpeedDeceleration)
             {
-                rigidbody.velocity -= Vector3.forward * Mathf.Sign(direction) * Time.deltaTime * scale * MaxSpeedDeceleration;
+                rigidbody.velocity -= Vector3.forward * Mathf.Sign(direction) * Time.deltaTime * MaxSpeedDeceleration;
             }
             else
             {
-                rigidbody.velocity += Vector3.forward * (Mathf.Sign(rigidbody.velocity.z) * scale * MaxSpeed - rigidbody.velocity.z);
+                rigidbody.velocity += Vector3.forward * (Mathf.Sign(rigidbody.velocity.z) * MaxSpeed - rigidbody.velocity.z);
             }
         }
     }
