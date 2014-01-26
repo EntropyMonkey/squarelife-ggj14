@@ -24,7 +24,8 @@ public class Aging : IReset {
         Age.age = AbsoluteAge / Lifetime;
         if (AbsoluteAge >= Lifetime)
         {
-            LifetimeExpired.Dispatch(this);
+			if (GetComponent<Breeding>().Child == null) Application.LoadLevel(0);
+			LifetimeExpired.Dispatch(this);
         }
     }
 
