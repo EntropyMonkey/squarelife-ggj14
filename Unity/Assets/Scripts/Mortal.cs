@@ -24,7 +24,9 @@ public class Mortal : MonoBehaviour
 	IEnumerator DieAfter(float t)
 	{
 		transform.position = transform.GetComponentInChildren<WorldCollider>().LastCollisionPosition;
-		GetComponent<Resettable>().Reset();
+
+		Resettable r = GetComponent<Resettable>();
+		if (r) r.Reset();
 
 		yield return new WaitForSeconds(t);
 
