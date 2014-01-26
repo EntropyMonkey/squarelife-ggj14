@@ -30,7 +30,8 @@ public class Walking : Moving
     void FixedUpdate()
     {
         //World axes: (camera-axis, up-down, left-right)
-        float scale = scaling != null ? scaling.Scale : 1;
+        //float scale = scaling != null ? scaling.Scale : 1;
+        float scale = 1;
         if (direction != 0)
         {
             rigidbody.velocity += Vector3.forward * Mathf.Sign(direction) * Time.deltaTime * scale * (Grounded ? GroundAcceleration : AirAcceleration);
