@@ -3,40 +3,23 @@ using System.Collections;
 
 public class PlayerCamera : MonoBehaviour
 {
-	public PlayerController player;
+    public Scaling Player;
+    public float MinSize = 5;
+    public float MaxSize = 10;
+    public float Speed = 2;
 
-	[SerializeField]
-	private float minSize = 5;
-	[SerializeField]
-	private float maxSize = 10;
+    void FixedUpdate()
+    {
+        if (Player != null)
+        {
+            camera.fieldOfView = MinSize + (MaxSize - MinSize) * Player.Scale / Player.MaxScale;
+            camera.ResetAspect();
+            camera.aspect /= Player.Aspect;
 
-	[SerializeField]
-	private float speed = 2;
-
-	void Awake()
-	{
-		if (player == null)
-			Debug.LogError("Please assign a player to the Main Camera.");
-	}
-
-	// Use this for initialization
-	void Start()
-	{
-
-	}
-
-	// Update is called once per frame
-	void FixedUpdate()
-	{
-		if (player == null)
-			return;
-
-		//camera.orthographicSize = minSize + (maxSize - minSize) * player.NormalizedAge;
-		camera.fieldOfView = minSize + (maxSize - minSize) * player.NormalizedAge;
-
-		Vector3 newPos = transform.position;
-		newPos.z = Mathf.Lerp(newPos.z, player.transform.position.z, speed * Time.deltaTime);
-		newPos.y = Mathf.Lerp(newPos.y, player.transform.position.y, speed * Time.deltaTime);
-		transform.position = newPos;
-	}
+            Vector3 newPos = transform.position;
+            newPos.z = Mathf.Lerp(newPos.z, Player.transform.position.z, Speed * Time.deltaTime);
+            newPos.y = Mathf.Lerp(newPos.y, Player.transform.position.y, Speed * Time.deltaTime);
+            transform.position = newPos;
+        }
+    }
 }

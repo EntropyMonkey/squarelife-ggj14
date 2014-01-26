@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿/*using UnityEngine;
 using System.Collections;
 
 public class SpiderController : Controller
@@ -112,3 +112,4 @@ public class SpiderController : Controller
 		}
 	}
 }
+*/
