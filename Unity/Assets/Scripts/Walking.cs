@@ -3,11 +3,11 @@ using System.Collections;
 
 public class Walking : Moving
 {
-    public FloatStat MaxSpeed = 10;
-    public FloatStat MaxSpeedDeceleration = 300;
-    public FloatStat GroundAcceleration = 150;
-    public FloatStat GroundDeceleration = 300;
-    public FloatStat AirAcceleration = 75;
+    public float MaxSpeed = 10;
+    public float MaxSpeedDeceleration = 300;
+    public float GroundAcceleration = 150;
+    public float GroundDeceleration = 300;
+    public float AirAcceleration = 75;
     public WorldCollider GroundCollider;
 
     private Scaling scaling;

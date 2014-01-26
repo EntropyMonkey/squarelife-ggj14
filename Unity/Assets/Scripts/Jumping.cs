@@ -4,7 +4,7 @@ using System.Collections;
 [RequireComponent(typeof(Moving))]
 class Jumping : MonoBehaviour
 {
-    public FloatStat Speed = 8;
+    public float Speed = 8;
 
     private const float TIMEOUT = .1f;
 

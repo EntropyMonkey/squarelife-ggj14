@@ -4,8 +4,8 @@ using System.Collections;
 public class PlayerCamera : MonoBehaviour
 {
     public Scaling Player;
-    public float MinSize = 5;
-    public float MaxSize = 10;
+    public float MinSize = 60;
+    public float MaxSize = 120;
     public float Speed = 2;
 
     void FixedUpdate()
@@ -13,8 +13,8 @@ public class PlayerCamera : MonoBehaviour
         if (Player != null)
         {
             camera.fieldOfView = MinSize + (MaxSize - MinSize) * Player.Scale / Player.MaxScale;
-            camera.ResetAspect();
-            camera.aspect /= Player.Aspect;
+            //camera.ResetAspect();
+            //camera.aspect /= Player.Aspect;
 
             Vector3 newPos = transform.position;
             newPos.z = Mathf.Lerp(newPos.z, Player.transform.position.z, Speed * Time.deltaTime);
