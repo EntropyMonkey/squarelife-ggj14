@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Breeding : MonoBehaviour
+public class Breeding : IReset
 {
     public Transform ChildAttachmentPoint;
     public Transform ChildPrefab;
@@ -35,20 +35,16 @@ public class Breeding : MonoBehaviour
 
     private Colored colored;
 
-    public Breeding()
-    {
-        Child = null;
-    }
-
     void Awake()
-    {
+	{
+		Child = null;
         colored = GetComponent<Colored>();
 		Hearts = 0;
     }
 
     void OnGUI()
     {
-        GUI.TextArea(new Rect(Screen.width - 80, 16, 48, 24), "<3: " + Hearts + "/3");
+        GUI.TextArea(new Rect(Screen.width - 80, 16, 48, 24), "<3: " + Hearts + "/" + HeartsNeededToBreed);
     }
 
     public void SetSwitching(bool switching)
@@ -63,12 +59,13 @@ public class Breeding : MonoBehaviour
     {
         if (Child != null)
         {
-            Transform child = PlayerPrefabInstantiator.Instantiate(Child.position, Child.rotation).transform;
-            Colored childColored = child.GetComponent<Colored>();
-            childColored.world = colored.world;
-            childColored.Color = Child.GetComponent<Colored>().Color;
-            SwitchedToChild.Dispatch(child);
-            Destroy(gameObject);
+            //Transform child = PlayerPrefabInstantiator.Instantiate(Child.position, Child.rotation).transform;
+            
+            colored.Color = Child.GetComponent<Colored>().Color;
+
+			GetComponent<Resettable>().Reset();
+
+			SwitchedToChild.Dispatch(transform);
         }
     }
 
@@ -85,4 +82,13 @@ public class Breeding : MonoBehaviour
         }
     }
 
+	public override void Reset()
+	{
+		Hearts = 0;
+		if (Child)
+		{
+			Destroy(Child.gameObject);
+			Child = null;
+		}
+	}
 }

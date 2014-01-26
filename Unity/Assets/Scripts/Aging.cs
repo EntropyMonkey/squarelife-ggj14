@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Aging : MonoBehaviour {
+public class Aging : IReset {
     public float Lifetime = 30;
     public float Age { get; private set; }
     public float AbsoluteAge { get; private set; }
@@ -17,4 +17,10 @@ public class Aging : MonoBehaviour {
             LifetimeExpired.Dispatch(this);
         }
     }
+
+	public override void Reset()
+	{
+		Age = 0;
+		AbsoluteAge = 0;
+	}
 }

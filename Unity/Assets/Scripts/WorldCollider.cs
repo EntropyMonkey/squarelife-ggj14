@@ -10,6 +10,13 @@ public class WorldCollider : MonoBehaviour
             return collisions > 0;
         }
     }
+
+	public Vector3 LastCollisionPosition
+	{
+		get;
+		private set;
+	}
+
     public Dispatcher<WorldCollider> CollisionBegun = new Dispatcher<WorldCollider>();
     public Dispatcher<WorldCollider> CollisionEnded = new Dispatcher<WorldCollider>();
 
@@ -17,7 +24,7 @@ public class WorldCollider : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (!other.isTrigger && other.transform != transform.parent)
+        if (!other.isTrigger && other.transform != transform.parent && other.tag != "Dangerous")
         {
             if (collisions++ == 0)
             {
@@ -28,10 +35,11 @@ public class WorldCollider : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        if (!other.isTrigger && other.transform != transform.parent)
+		if (!other.isTrigger && other.transform != transform.parent && other.tag != "Dangerous")
         {
             if (--collisions == 0)
             {
+				LastCollisionPosition = transform.parent.position;
                 CollisionEnded.Dispatch(this);
             }
         }

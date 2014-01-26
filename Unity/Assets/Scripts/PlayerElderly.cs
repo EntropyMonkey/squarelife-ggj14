@@ -26,7 +26,7 @@ public class PlayerElderly : MonoBehaviour
         }
     }
 
-    void FixedUpdate()
+    void Update()
     {
         if (aging.Age >= 1)
         {
