@@ -31,3 +31,5 @@ Unity/Assets/PlayMaker
 Unity/Assets/Photon Unity Networking
 Unity/Assets/Meshes
 Unity/Assets/iTween
+*.csproj
+*.sln
