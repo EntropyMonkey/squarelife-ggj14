@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 87c5e8e51ae6d544f9f9f18a3d1405d1
+guid: be368738541a3184594deffd8ec20b8a
 ModelImporter:
   serializedVersion: 15
   fileIDToRecycleName:
@@ -7,7 +7,7 @@ ModelImporter:
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: spikes_1.5x0.5
+    4300000: cross
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -27,7 +27,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: .0254999995
+    globalScale: .0199999996
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1

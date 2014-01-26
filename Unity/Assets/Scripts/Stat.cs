@@ -154,6 +154,15 @@ public class Vector4Stat : Stat<Vector4>
     }
 }
 
+/// <summary>
+/// Usage:
+/// 
+///		FloatStat MinSpeed;
+///		MinSpeed.AddModifier(x => 1.05f * x); // increases x by 5%
+///		MinSpeed.Base = 1; // only change base value, leave modifiers intact
+///		MinSpeed = 1; // change base value, delete modifiers (creates new stat, gc gets to work)
+/// </summary>
+/// <typeparam name="T">Type of the stat variable</typeparam>
 public class Stat<T>
 {
     public delegate T Modifier(T value);
